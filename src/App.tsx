@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import './App.css';
+import TodoBoard from "./TodoBoard";
 
 function App() {
+  const [inputValue, setInputValue] = useState('')
+  const [todoList, setTodoList] = useState<string[]>([])
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const addItem = () => {
+    setTodoList([...todoList, inputValue])
+  }
+  const setText = (text: string) => {
+    // setInputValue(text)
+    if (inputRef.current instanceof HTMLInputElement) {
+      inputRef.current.value = text;
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <input value={inputValue} type="text" onChange={(event) => setInputValue(event.target.value)} ref={inputRef}></input>
+      <button onClick={addItem} >add</button>
+
+      <TodoBoard todoList={todoList} setText={setText}></TodoBoard>
+    </main>
   );
 }
 
