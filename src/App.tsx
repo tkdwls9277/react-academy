@@ -17,6 +17,7 @@ function App() {
     }
   }
 
+
   return (
     <main>
       <input value={inputValue} type="text" onChange={(event) => setInputValue(event.target.value)} ref={inputRef}></input>
